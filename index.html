@@ -165,7 +165,7 @@
         <div class="api-key-section">
             <label for="api-key">Gemini API Key:</label>
             <input type="password" id="api-key" placeholder="Enter your Gemini API key">
-            <button onclick="saveApiKey()">Save Key</button>
+            <button onclick="saveApiKey()">Set Key for Session</button>
         </div>
 
         <div class="system-prompt">
@@ -197,21 +197,13 @@
     </div>
 
     <script>
-        // Load API key from localStorage
-        const apiKeyInput = document.getElementById('api-key');
-        const savedApiKey = localStorage.getItem('geminiApiKey');
-        if (savedApiKey) {
-            apiKeyInput.value = savedApiKey;
-        }
-
         function saveApiKey() {
-            const apiKey = apiKeyInput.value.trim();
-            if (apiKey) {
-                localStorage.setItem('geminiApiKey', apiKey);
-                alert('API key saved for this session.');
-            } else {
+            const apiKey = document.getElementById('api-key').value.trim();
+            if (!apiKey) {
                 alert('Please enter a valid API key.');
+                return;
             }
+            alert('API key is set for this session only.');
         }
 
         function updateSliderValue(sliderId) {
@@ -227,7 +219,7 @@
         }
 
         async function sendMessage() {
-            const apiKey = apiKeyInput.value.trim();
+            const apiKey = document.getElementById('api-key').value.trim();
             if (!apiKey) {
                 alert('Please enter your Gemini API key.');
                 return;
